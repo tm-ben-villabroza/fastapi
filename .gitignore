@@ -1,0 +1,24 @@
+# python compiled files
+**.egg-info
+**.pyc
+**__pycache__
+
+# ignore env vars
+.env
+
+# lib and package dirs
+.venv
+node_modules
+
+# file history due to IDE
+.history
+
+# ignore sqlite local db
+**.db
+
+# ignore service account keys
+gcp_sa_key.json
+
+# others
+.vscode
+venv
