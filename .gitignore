@@ -22,3 +22,5 @@ gcp_sa_key.json
 # others
 .vscode
 venv
+*service_account_key*
+firebase_config.json

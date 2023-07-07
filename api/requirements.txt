@@ -4,3 +4,4 @@ sqlalchemy
 alembic
 pyrebase4
 firebase-admin
+black

@@ -7,10 +7,7 @@ from schema.request.emotion import EmotionCreateRequest, EmotionReadRequest
 from db.operations import emotion as emotion_op
 from schema.response.emotion import EmotionResponse
 
-router = APIRouter(
-    prefix='/emotion',
-    tags=['emotion']
-)
+router = APIRouter(prefix="/emotion", tags=["emotion"])
 
 
 @router.post("/create", response_model=EmotionResponse)
