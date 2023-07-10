@@ -1,7 +1,6 @@
 from db.database import BaseModel, engine
 from fastapi import FastAPI
-from routes import emotion
-from routes import auth
+from routes import emotion, auth, background_task
 
 from fastapi.middleware.cors import CORSMiddleware
 
@@ -20,5 +19,6 @@ app.add_middleware(
 
 app.include_router(emotion.router)
 app.include_router(auth.router)
+app.include_router(background_task.router)
 
 BaseModel.metadata.create_all(engine)

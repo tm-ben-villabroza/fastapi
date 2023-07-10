@@ -5,3 +5,5 @@ alembic
 pyrebase4
 firebase-admin
 black
+celery==5.2.7
+redis==4.3.4
