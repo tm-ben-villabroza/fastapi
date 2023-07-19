@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+    </head>
+    <body>
+        <h1>WebSocket Notifs</h1>
+        <ul id='notifs'>
+        </ul>
+        <script>
+            var ws = new WebSocket("ws://localhost:8000/websocket/receive-notifs");
+            ws.onmessage = function(event) {
+                var notifs = document.getElementById('notifs')
+                var notif = document.createElement('li')
+                var content = document.createTextNode(event.data)
+                notif.appendChild(content)
+                notifs.appendChild(notif)
+            };
+        </script>
+    </body>
+</html>
