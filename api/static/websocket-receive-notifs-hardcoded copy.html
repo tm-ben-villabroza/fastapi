@@ -4,11 +4,11 @@
         <title>Chat</title>
     </head>
     <body>
-        <h1>WebSocket Notifs</h1>
+        <h1>WebSocket Hardcoded Notifs</h1>
         <ul id='notifs'>
         </ul>
         <script>
-            var ws = new WebSocket("ws://localhost:8000/websocket/receive-notifs");
+            var ws = new WebSocket("ws://localhost:8000/websocket/receive-notifs-hardcoded");
             ws.onmessage = function(event) {
                 var notifs = document.getElementById('notifs')
                 var notif = document.createElement('li')

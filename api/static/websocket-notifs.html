@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Chat</title>
+    </head>
+    <body>
+        <h1>WebSocket Chat</h1>
+        <h2>Your username: <input type="text" id="ws-id"></input></h2>
+        <form action="" onsubmit="sendMessage(event)">
+            <input type="text" id="messageText" autocomplete="off"/>
+            <button>Send</button>
+        </form>
+        <ul id='messages'>
+        </ul>
+        <script>
+            var client_id = Date.now()
+            var ws = new WebSocket(`ws://localhost:8000/websocket/notifs/`);
+            ws.onmessage = function(event) {
+                var messages = document.getElementById('messages')
+                var message = document.createElement('li')
+                var content = document.createTextNode(event.data)
+                message.appendChild(content)
+                messages.appendChild(message)
+            };
+            function sendMessage(event) {
+                username = document.getElementById('ws-id').value
+                var input = document.getElementById("messageText")
+                ws.send(JSON.stringify({"message": input.value, "username": username}))
+                input.value = ''
+                event.preventDefault()
+            }
+        </script>
+    </body>
+</html>
