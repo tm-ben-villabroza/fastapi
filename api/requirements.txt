@@ -1,9 +1,10 @@
-fastapi
-uvicorn
+fastapi==0.100.0
+uvicorn==0.23.1
 sqlalchemy
-alembic
+alembic==1.11.1
 pyrebase4
-firebase-admin
-black
+firebase-admin==6.2.0
+black==23.7.0
 celery==5.2.7
 redis==4.3.4
+websockets==11.0.3
