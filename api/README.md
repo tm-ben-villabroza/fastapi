@@ -6,7 +6,7 @@ Setup:
 5. uvicorn main:app --reload
 
 Testing websockets:
-1. Go to `http://127.0.0.1:8000/static/websocket.html`
+1. Go to `http://127.0.0.1:8000/static/websocket-send-receive-messages-to-server.html`
 
 Testing celery and redis:
 1. docker run -p 6379:6379 --name redis-fastapi redis
