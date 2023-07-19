@@ -64,7 +64,6 @@ async def websocket_endpoint(websocket: WebSocket):
     try:
         while True:
             data = await websocket.receive_json()
-            print(data)
             # await manager.send_personal_message(f"You wrote: {data['message']}", websocket)
             await manager.broadcast(f"{data['username']} says: {data['message']}")
     except WebSocketDisconnect:
