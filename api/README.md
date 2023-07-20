@@ -19,6 +19,6 @@ Testing authentication:
 Deployment:
 1. gcloud init (if you haven't already)
 2. gcloud builds submit --tag gcr.io/ben-and-ben-sandbox/ben-fastapi-learning --ignore-file .dockerignore
-3. gcloud run deploy --image gcr.io/ben-and-ben-sandbox/ben-fastapi-learning --platform managed
+3. gcloud run deploy ben-fastapi-learning --image gcr.io/ben-and-ben-sandbox/ben-fastapi-learning --platform managed --region us-central1 --allow-unauthenticated
 
 Source: https://medium.com/codex/secured-serverless-fastapi-with-google-cloud-run-66242b916b46
