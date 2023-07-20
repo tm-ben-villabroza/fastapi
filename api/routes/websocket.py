@@ -61,6 +61,7 @@ manager = ConnectionManager()
 @router.websocket("/notifs/")
 async def websocket_endpoint(websocket: WebSocket):
     await manager.connect(websocket)
+    await manager.broadcast(f"A new user joined the chat")
     try:
         while True:
             data = await websocket.receive_json()

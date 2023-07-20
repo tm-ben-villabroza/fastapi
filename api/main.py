@@ -1,3 +1,6 @@
+import os
+import uvicorn
+
 from db.database import BaseModel, engine
 from fastapi import FastAPI
 from routes import emotion, background_task, websocket, auth
@@ -26,3 +29,6 @@ app.include_router(background_task.router)
 app.include_router(websocket.router)
 
 BaseModel.metadata.create_all(engine)
+
+if __name__ == "__main__":
+    uvicorn.run(app, port=int(os.environ.get("PORT", 8000)), host="0.0.0.0")

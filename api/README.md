@@ -15,3 +15,10 @@ Testing celery and redis:
 
 Testing authentication:
 1. Broken ATM. Need to add the firebase config and service account key (accidentally deleted from formatting laptop)
+
+Deployment:
+1. gcloud init (if you haven't already)
+2. gcloud builds submit --tag gcr.io/ben-and-ben-sandbox/ben-fastapi-learning --ignore-file .dockerignore
+3. gcloud run deploy --image gcr.io/ben-and-ben-sandbox/ben-fastapi-learning --platform managed
+
+Source: https://medium.com/codex/secured-serverless-fastapi-with-google-cloud-run-66242b916b46
