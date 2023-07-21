@@ -3,24 +3,20 @@
 import React from "react";
 import {
   NavigationMenu,
-  NavigationMenuContent,
-  NavigationMenuIndicator,
   NavigationMenuItem,
-  NavigationMenuLink,
   NavigationMenuList,
-  NavigationMenuTrigger,
-  NavigationMenuViewport,
 } from "@/components/ui/navigation-menu";
+import Link from "next/link";
 
 function Navbar() {
   return (
-    <NavigationMenu>
+    <NavigationMenu className="bg-slate-300 p-3">
       <NavigationMenuList>
+        <NavigationMenuItem className="pr-4">
+          <Link href="/">Home</Link>
+        </NavigationMenuItem>
         <NavigationMenuItem>
-          <NavigationMenuTrigger>Item One</NavigationMenuTrigger>
-          <NavigationMenuContent>
-            <NavigationMenuLink>Link</NavigationMenuLink>
-          </NavigationMenuContent>
+          <Link href="/auth/login">Login</Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>
