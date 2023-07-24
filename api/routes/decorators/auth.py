@@ -16,7 +16,7 @@ def require_authentication(func):
                 status_code=400,
             )
 
-        token = request.headers.get("Authorization", None)
+        token = request.cookies.get("token", None)
         if not token:
             raise HTTPException(
                 detail={

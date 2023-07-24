@@ -15,8 +15,11 @@ function Navbar() {
         <NavigationMenuItem className="pr-4">
           <Link href="/">Home</Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
+        <NavigationMenuItem className="pr-4">
           <Link href="/auth/login">Login</Link>
+        </NavigationMenuItem>
+        <NavigationMenuItem>
+          <Link href="/emotion/all">All Emotions</Link>
         </NavigationMenuItem>
       </NavigationMenuList>
     </NavigationMenu>

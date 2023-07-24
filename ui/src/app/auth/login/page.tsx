@@ -9,13 +9,13 @@ import { Button } from "@/components/ui/button";
 import {
   Form,
   FormControl,
-  FormDescription,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { AuthService } from "@/services/auth";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -31,8 +31,12 @@ function Login() {
     },
   });
 
-  function onSubmit(values: z.infer<typeof formSchema>) {
-    console.log(values);
+  async function onSubmit(values: z.infer<typeof formSchema>) {
+    try {
+      await AuthService.postLogin(values);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (
