@@ -53,7 +53,7 @@ class UserModel(BaseModel):
     manager_id = mapped_column(Integer, ForeignKey("users.id"))
     manager = relationship("UserModel", back_populates="subordinates", remote_side=[id])
     subordinates = relationship("UserModel", back_populates="manager")
-    email = Column(String(60))
+    email = Column(String(60), unique=True)
 
 
 class PermissionModel(BaseModel):
@@ -66,7 +66,7 @@ class PermissionModel(BaseModel):
     groups: Mapped[List["GroupModel"]] = relationship(
         secondary=group_permissions, back_populates="permissions"
     )
-    permission_name = Column(String(60))
+    permission_name = Column(String(60), unique=True)
 
 
 class GroupModel(BaseModel):
@@ -79,4 +79,4 @@ class GroupModel(BaseModel):
     permissions: Mapped[List[PermissionModel]] = relationship(
         secondary=group_permissions, back_populates="groups"
     )
-    group_name = Column(String(60))
+    group_name = Column(String(60), unique=True)
