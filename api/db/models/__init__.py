@@ -1,2 +1,2 @@
-from .emotion import EmotionModel
-from .user import user_permissions, UserModel, PermissionModel
+from .emotion import *
+from .user import *
