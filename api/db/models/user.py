@@ -1,7 +1,7 @@
 from datetime import datetime
 from typing import List
 
-from sqlalchemy import Table, Column, ForeignKey, String
+from sqlalchemy import Table, Column, ForeignKey, String, Integer
 from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from ..database import BaseModel
@@ -25,6 +25,9 @@ class UserModel(BaseModel):
     permissions: Mapped[List["PermissionModel"]] = relationship(
         secondary=user_permissions, back_populates="users"
     )
+    manager_id = mapped_column(Integer, ForeignKey("users.id"))
+    subordinate = relationship("UserModel", back_populates="manager")
+    manager = relationship("UserModel", back_populates="subordinate", remote_side=[id])
     email = Column(String(60))
 
 
