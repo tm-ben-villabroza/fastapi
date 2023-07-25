@@ -51,8 +51,8 @@ class UserModel(BaseModel):
         secondary=user_groups, back_populates="users"
     )
     manager_id = mapped_column(Integer, ForeignKey("users.id"))
-    manager = relationship("UserModel", back_populates="subordinate", remote_side=[id])
-    subordinate = relationship("UserModel", back_populates="manager")
+    manager = relationship("UserModel", back_populates="subordinates", remote_side=[id])
+    subordinates = relationship("UserModel", back_populates="manager")
     email = Column(String(60))
 
 
