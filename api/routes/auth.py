@@ -1,12 +1,18 @@
+from db.serializers.user import UserSerializer
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
+
+from db.operations import user as user_op
 
 import firebase_admin
 import pyrebase
 import json
 from firebase_admin import credentials, auth
 from fastapi import Request, Response
+from sqlalchemy.orm import Session
+from fastapi import Depends
+from db.database import get_db
 
 # setup authentication and authorization
 cred = credentials.Certificate("ben-and-ben-sandbox-_service_account_keys.json")
@@ -17,7 +23,7 @@ router = APIRouter(prefix="/auth", tags=["auth"])
 
 
 @router.post("/signup", include_in_schema=False)
-async def signup(request: Request):
+async def signup(request: Request, db: Session = Depends(get_db)):
     req = await request.json()
     email = req["email"]
     password = req["password"]
@@ -27,13 +33,15 @@ async def signup(request: Request):
         )
     try:
         user = auth.create_user(email=email, password=password)
+        user = user_op.create_user(db, user)
         return JSONResponse(
             content={
-                "message": f"Successfully created user {user.uid}",
-                "user_id": f"{user.uid}",
+                "message": f"Successfully created user with email {user.email}",
+                "user": UserSerializer.from_orm(user).dict(),
             },
             status_code=200,
         )
+
     except Exception as exception:
         raise HTTPException(
             detail={"message": f"Error Creating User: {str(exception)}"},
