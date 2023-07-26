@@ -10,4 +10,4 @@ class UserBaseType(BaseModel):
 
 
 class UserWithManagerType(UserBaseType):
-    manager: UserBaseType
+    manager: UserBaseType | None

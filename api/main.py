@@ -3,7 +3,7 @@ import uvicorn
 
 from db.database import BaseModel, engine
 from fastapi import FastAPI
-from routes import emotion, background_task, websocket, auth
+from routes import emotion, background_task, websocket, auth, user
 from fastapi.staticfiles import StaticFiles
 
 from fastapi.middleware.cors import CORSMiddleware
@@ -25,6 +25,7 @@ app.mount("/static", StaticFiles(directory="static"), name="static")
 
 app.include_router(emotion.router)
 app.include_router(auth.router)
+app.include_router(user.router)
 app.include_router(background_task.router)
 app.include_router(websocket.router)
 
