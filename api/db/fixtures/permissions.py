@@ -1,6 +1,14 @@
-permission_names = [
-    "ReadEmotion",
-    "WriteEmotion",
-    "UpdateEmotion",
-    "DeleteEmotion",
-]
+permissions = {
+    "ReadEmotion": {
+        "permission_name": "ReadEmotion",
+    },
+    "CreateEmotion": {
+        "permission_name": "CreateEmotion",
+    },
+    "UpdateEmotion": {
+        "permission_name": "UpdateEmotion",
+    },
+    "DeleteEmotion": {
+        "permission_name": "DeleteEmotion",
+    },
+}

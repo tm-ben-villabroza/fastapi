@@ -1,3 +1,4 @@
+from schema.request.user import HasPermissionRequest
 from db.types.user import UserBaseType, UserWithManagerType
 from .decorators.auth import require_authentication
 from db.database import get_db
@@ -8,6 +9,18 @@ from db.operations import user as user_op
 from fastapi.exceptions import HTTPException
 
 router = APIRouter(prefix="/user", tags=["user"])
+
+
+@router.post("/permissions/has-all-permissions")
+@require_authentication
+async def has_all_permission(
+    request: Request,
+    payload: HasPermissionRequest,
+    db: Session = Depends(get_db),
+    user: UserWithManagerType = None,
+):
+    status, missing_permissions = user_op.has_all_permission(db, user, payload)
+    return {"status": status, "missing_permissions": missing_permissions}
 
 
 @router.post("/permissions/reload")
