@@ -1,4 +1,5 @@
 from functools import wraps
+from db.models.user import UserModel
 from firebase_admin import auth
 from firebase_admin.auth import ExpiredIdTokenError
 from fastapi.exceptions import HTTPException
@@ -20,25 +21,23 @@ def require_authentication(func):
         if not token:
             raise HTTPException(
                 detail={
-                    "message": f"This endpoint requires authentication. You are missing an Authorization header"
+                    "message": f"This endpoint requires authentication. You are missing an cookie called token."
                 },
                 status_code=401,
             )
 
         try:
-            auth.verify_id_token(token)
+            user_firebase = auth.verify_id_token(token)
+            email_firebase = user_firebase["email"]
+
+            db = kwargs.get("db", None)
+            user = db.query(UserModel).filter_by(email=email_firebase).first()
+            kwargs["user"] = user
         except ExpiredIdTokenError:
             raise HTTPException(
                 detail={
                     "message": "Your token is expired. Login again",
                     "action": "login",
-                },
-                status_code=400,
-            )
-        except Exception as exception:
-            raise HTTPException(
-                detail={
-                    "message": f"There was an error validating the token: {str(exception)}"
                 },
                 status_code=400,
             )

@@ -1,4 +1,5 @@
-from db.serializers.user import UserSerializer
+from db.models.user import UserModel
+from db.types.user import UserBaseType, UserWithManagerType
 from fastapi import APIRouter
 from fastapi.responses import JSONResponse
 from fastapi.exceptions import HTTPException
@@ -37,7 +38,7 @@ async def signup(request: Request, db: Session = Depends(get_db)):
         return JSONResponse(
             content={
                 "message": f"Successfully created user with email {user.email}",
-                "user": UserSerializer.from_orm(user).dict(),
+                "user": UserWithManagerType.from_orm(user).dict(),
             },
             status_code=200,
         )
@@ -50,28 +51,31 @@ async def signup(request: Request, db: Session = Depends(get_db)):
 
 
 @router.post("/login", include_in_schema=False)
-async def login(response: Response, request: Request):
+async def login(response: Response, request: Request, db: Session = Depends(get_db)):
     req_json = await request.json()
     email = req_json["email"]
     password = req_json["password"]
-    try:
-        user = pb.auth().sign_in_with_email_and_password(email, password)
-        jwt = user["idToken"]
-        response = JSONResponse(content={"success": True}, status_code=200)
-        response.set_cookie(
-            key="token",
-            value=jwt,
-            secure=False,
-            httponly=True,
-            samesite="strict",
-        )
 
-        return response
-    except Exception as exception:
-        raise HTTPException(
-            detail={"message": f"There was an error logging in: {str(exception)}"},
-            status_code=400,
-        )
+    user = pb.auth().sign_in_with_email_and_password(email, password)
+    jwt = user["idToken"]
+
+    user = db.query(UserModel).filter_by(email=email).first()
+    response = JSONResponse(
+        content={
+            "success": True,
+            "user": UserWithManagerType.from_orm(user).dict(),
+        },
+        status_code=200,
+    )
+    response.set_cookie(
+        key="token",
+        value=jwt,
+        secure=False,
+        httponly=True,
+        samesite="strict",
+    )
+
+    return response
 
 
 @router.post("/is-token-valid", include_in_schema=False)
