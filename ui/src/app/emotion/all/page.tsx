@@ -17,8 +17,7 @@ function EmotionsAll() {
     EmotionService.getAllEmotions
   );
 
-  console.log(error);
-  if (error) return <div>failed to load</div>;
+  if (error) return <div>Error: {error?.response.data.detail.message}</div>;
   if (isLoading) return <div>loading...</div>;
 
   return <div>hello {JSON.stringify(data?.data)}!</div>;

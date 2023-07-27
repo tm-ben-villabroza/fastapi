@@ -41,5 +41,6 @@ async def read_emotion_all(
 ):
     print(user.email)
     print(user.id)
-    print(user.manager.email)
+    if user.manager:
+        print(user.manager.email)
     return emotion_op.read_emotion_all(db)

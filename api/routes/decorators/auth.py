@@ -21,7 +21,7 @@ def require_authentication(func):
         if not token:
             raise HTTPException(
                 detail={
-                    "message": f"This endpoint requires authentication. You are missing an cookie called token."
+                    "message": f"This endpoint requires authentication. You are missing a cookie called token."
                 },
                 status_code=401,
             )
