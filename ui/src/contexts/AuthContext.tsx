@@ -1,4 +1,10 @@
-import { ReactNode, createContext, useContext, useState } from "react";
+import {
+  ReactNode,
+  createContext,
+  useContext,
+  useEffect,
+  useState,
+} from "react";
 
 type AuthType = {
   isLoggedin: boolean;
@@ -24,14 +30,29 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [email, setEmail] = useState<string>("");
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
 
+  useEffect(() => {
+    const authDataRaw = localStorage.getItem("auth");
+    if (!authDataRaw) return;
+
+    const authData = JSON.parse(authDataRaw);
+    console.log(authData);
+    setEmail(authData.email);
+    setIsLoggedin(authData.isLoggedin);
+  }, []);
+
   const login = (email: string) => {
     setEmail(email);
     setIsLoggedin(true);
+    localStorage.setItem("auth", JSON.stringify({ email, isLoggedin: true }));
   };
 
   const logout = () => {
     setEmail("");
     setIsLoggedin(false);
+    localStorage.setItem(
+      "auth",
+      JSON.stringify({ email: "", isLoggedin: false })
+    );
   };
 
   const value = {
