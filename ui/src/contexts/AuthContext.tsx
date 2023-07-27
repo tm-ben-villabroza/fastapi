@@ -5,6 +5,9 @@ import {
   useEffect,
   useState,
 } from "react";
+import { AxiosError } from "axios";
+
+export const AuthLogoutEventName = "AuthLogout";
 
 type AuthType = {
   isLoggedin: boolean;
@@ -31,13 +34,19 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   const [isLoggedin, setIsLoggedin] = useState<boolean>(false);
 
   useEffect(() => {
+    // setup authentication credentials on browser refresh
     const authDataRaw = localStorage.getItem("auth");
     if (!authDataRaw) return;
 
     const authData = JSON.parse(authDataRaw);
-    console.log(authData);
     setEmail(authData.email);
     setIsLoggedin(authData.isLoggedin);
+  }, []);
+
+  useEffect(() => {
+    // setup event listener for LogoutEvent from axios api
+    document.addEventListener(AuthLogoutEventName, logout);
+    return () => document.removeEventListener(AuthLogoutEventName, logout);
   }, []);
 
   const login = (email: string) => {

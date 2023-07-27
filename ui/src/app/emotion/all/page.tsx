@@ -7,7 +7,6 @@ import { EmotionService } from "@/services/emotion";
 
 const fetchEmotions = async () => {
   const result = await axios.get("http://localhost:8000/emotion/read/all");
-  console.log(result);
   return result.data;
 };
 

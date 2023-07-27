@@ -39,7 +39,7 @@ def require_authentication(func):
                     "message": "Your token is expired. Login again",
                     "action": "login",
                 },
-                status_code=400,
+                status_code=401,
             )
 
         return await func(*args, **kwargs)
