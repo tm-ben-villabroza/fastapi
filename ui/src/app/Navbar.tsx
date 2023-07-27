@@ -7,8 +7,10 @@ import {
   NavigationMenuList,
 } from "@/components/ui/navigation-menu";
 import Link from "next/link";
+import { useAuth } from "@/contexts/AuthContext";
 
 function Navbar() {
+  const { email, isLoggedin } = useAuth();
   return (
     <NavigationMenu className="bg-slate-300 p-3">
       <NavigationMenuList>
@@ -21,6 +23,9 @@ function Navbar() {
         <NavigationMenuItem>
           <Link href="/emotion/all">All Emotions</Link>
         </NavigationMenuItem>
+        {isLoggedin ? (
+          <NavigationMenuItem> Email: {email}</NavigationMenuItem>
+        ) : null}
       </NavigationMenuList>
     </NavigationMenu>
   );

@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { AuthService } from "@/services/auth";
+import { useAuth } from "@/contexts/AuthContext";
 
 const formSchema = z.object({
   email: z.string().email(),
@@ -23,6 +24,8 @@ const formSchema = z.object({
 });
 
 function Login() {
+  const { email, isLoggedin, login } = useAuth();
+
   const form = useForm<z.infer<typeof formSchema>>({
     resolver: zodResolver(formSchema),
     defaultValues: {
@@ -33,7 +36,9 @@ function Login() {
 
   async function onSubmit(values: z.infer<typeof formSchema>) {
     try {
-      await AuthService.postLogin(values);
+      const response = await AuthService.postLogin(values);
+      const email = response.data.user.email;
+      login(email);
     } catch (error) {
       console.error(error);
     }

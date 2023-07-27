@@ -2,7 +2,9 @@ import { AxiosResponse } from "axios";
 import api from "./api";
 
 interface LoginResponse {
-  token: string;
+  user: {
+    email: string;
+  };
 }
 
 interface LoginPayload {
