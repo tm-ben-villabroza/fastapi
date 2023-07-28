@@ -20,9 +20,11 @@ function Navbar() {
         <NavigationMenuItem className="pr-4">
           <Link href="/auth/login">Login</Link>
         </NavigationMenuItem>
-        <NavigationMenuItem>
-          <Link href="/emotion/all">All Emotions</Link>
-        </NavigationMenuItem>
+        {isLoggedin ? (
+          <NavigationMenuItem>
+            <Link href="/emotion/all">All Emotions</Link>
+          </NavigationMenuItem>
+        ) : null}
         {isLoggedin ? (
           <NavigationMenuItem> Email: {email}</NavigationMenuItem>
         ) : null}
